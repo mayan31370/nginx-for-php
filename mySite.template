@@ -1,0 +1,15 @@
+server {
+    listen ${NGINX_PORT};
+    server_name  ${NGINX_SERVER_NAME};
+    charset utf-8;
+    root   /var/www/html;
+    index  index.html index.htm index.php;
+    include ${PHP_TEMPLATE_URI} 
+    location ~ \.php$ {
+        fastcgi_pass   ${PHP_URI};
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
+
