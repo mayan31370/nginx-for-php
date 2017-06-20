@@ -1,10 +1,9 @@
 server {
     listen ${NGINX_PORT};
-    server_name  ${NGINX_SERVER_NAME};
     charset utf-8;
     root   /var/www/html;
     index  index.html index.htm index.php;
-    include ${PHP_TEMPLATE_URI} 
+    include conf.d/php.template; 
     location ~ \.php$ {
         fastcgi_pass   ${PHP_URI};
         fastcgi_index  index.php;
