@@ -4,8 +4,7 @@ RUN apk add --no-cache nginx supervisor tzdata && \
 	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
 	echo "Asia/Shanghai" > /etc/timezone && \
 	apk del tzdata && \
-	docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
-	docker-php-ext-install -j$(nproc) pdo_mysql
+	docker-php-ext-install pdo_mysql
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
 EXPOSE 80
