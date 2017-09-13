@@ -1,6 +1,5 @@
 FROM php:5.6-fpm-alpine
-RUN echo "151.101.72.249 dl-cdn.alpinelinux.org" >> /etc/hosts && \
-	apk add --no-cache nginx supervisor tzdata zlib zlib-dev && \
+RUN apk add --no-cache nginx supervisor tzdata zlib zlib-dev && \
 	echo "fastcgi_param  SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;" >> /etc/nginx/fastcgi_params && \
 	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
 	echo "Asia/Shanghai" > /etc/timezone && \
