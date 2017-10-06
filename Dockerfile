@@ -11,6 +11,7 @@ RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make aut
 	apk del tzdata && \
 	echo "data.timezone = Asia/Shanghai" > /usr/local/etc/php/php.ini && \ 
 	docker-php-ext-install pdo_mysql zip curl iconv mbstring posix && \
+	&& docker-php-ext-enable xdebug && \
 	echo "zend_extension=\"/usr/local/php/modules/xdebug.so\"" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
