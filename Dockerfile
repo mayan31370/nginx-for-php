@@ -1,5 +1,5 @@
 FROM php:5.6-fpm-alpine
-RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make autoconf && \
+RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make autoconf curl curl-dev libcurl php5-curl && \
 	pecl install xdebug && \
 	pip install supervisor-stdout && \
 	echo "fastcgi_param  SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;" >> /etc/nginx/fastcgi_params && \
@@ -10,7 +10,8 @@ RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make aut
 	echo "Asia/Shanghai" > /etc/timezone && \
 	apk del tzdata && \
 	echo "data.timezone = Asia/Shanghai" > /usr/local/etc/php/php.ini && \ 
-	docker-php-ext-install pdo_mysql zip curl iconv mbstring posix
+	docker-php-ext-install pdo_mysql zip curl iconv mbstring posix && \
+	echo "zend_extension=\"/usr/local/php/modules/xdebug.so\"" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
 EXPOSE 80
