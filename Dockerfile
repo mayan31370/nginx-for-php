@@ -1,6 +1,6 @@
 FROM php:5.6-fpm-alpine
 RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make autoconf curl curl-dev libcurl php5-curl && \
-	pecl install xdebug && \
+	pecl install xdebug memcache && yes && \
 	pip install supervisor-stdout && \
 	echo "fastcgi_param  SCRIPT_FILENAME    \$document_root\$fastcgi_script_name;" >> /etc/nginx/fastcgi_params && \
 	echo "fastcgi_split_path_info       ^(.+\.php)(/.+)$;" >> /etc/nginx/fastcgi_params && \
@@ -12,8 +12,10 @@ RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make aut
 	echo "data.timezone = Asia/Shanghai" > /usr/local/etc/php/php.ini && \ 
 	docker-php-ext-install bcmath pdo_mysql zip curl iconv mbstring posix && \
 	mkdir /usr/local/php/modules && cp /usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so /usr/local/php/modules/ && \
-	docker-php-ext-enable xdebug && \
-	echo "zend_extension=\"/usr/local/php/modules/xdebug.so\"" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+	cp /usr/local/lib/php/extensions/no-debug-non-zts-20131226/memcache.so /usr/local/php/modules/ && \
+	docker-php-ext-enable xdebug memcache && \
+	echo "zend_extension=\"/usr/local/php/modules/xdebug.so\"" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+	echo "extension=\"/usr/local/php/modules/memcache.so\"" > /usr/local/etc/php/conf.d/docker-php-ext-memcache.ini
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisord.conf
 EXPOSE 80
