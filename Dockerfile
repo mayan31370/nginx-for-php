@@ -10,7 +10,7 @@ RUN apk add --no-cache nginx supervisor py-pip tzdata zlib zlib-dev g++ make aut
 	echo "Asia/Shanghai" > /etc/timezone && \
 	apk del tzdata && \
 	echo "data.timezone = Asia/Shanghai" > /usr/local/etc/php/php.ini && \ 
-	docker-php-ext-install pdo_mysql zip curl iconv mbstring posix && \
+	docker-php-ext-install bcmath pdo_mysql zip curl iconv mbstring posix && \
 	mkdir /usr/local/php/modules && cp /usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so /usr/local/php/modules/ && \
 	docker-php-ext-enable xdebug && \
 	echo "zend_extension=\"/usr/local/php/modules/xdebug.so\"" > /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
