@@ -1,2 +1,2 @@
-# 阿里云仓库地址：
-registry.cn-hangzhou.aliyuncs.com/counect_data/php-fpm-alpine-nginx
+# 仓库地址：
+docker pull mayan31370/nginx-for-php
